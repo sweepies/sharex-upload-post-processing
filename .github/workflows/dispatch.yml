@@ -1,0 +1,21 @@
+name: Dispatch Terraform workflow
+
+on:
+  push:
+    branches:
+      - master
+    paths-ignore:
+      - ".github/**"
+
+jobs:
+  dispatch:
+    name: Dispatch Terraform workflow
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dispatch
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: Terraform service trigger
+          repo: sweepyoface/terraform
+          token: ${{ secrets.PERSONAL_TOKEN }}
+          inputs: '{"service":"${{ github.event.repository.name }}"}'
